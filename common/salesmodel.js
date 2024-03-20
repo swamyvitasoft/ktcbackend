@@ -21,6 +21,22 @@ const saleSchema = new mongoose.Schema({
      items:{
         type:String,
         required:true 
+     },
+     imei:{
+        type:String,
+        required:true 
+     },
+     estimated:{
+        type:String,
+        required:true 
+     },
+     advance:{
+        type:String,
+        required:true 
+     },
+     balance:{
+        type:String,
+        required:true 
      }
 },
 {timestamps:true}

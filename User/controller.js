@@ -19,7 +19,7 @@ export const userLogin = async (req,res)=>{
             res.status(404).json("user not found")
         }
         const secretKey = 'my-secretKey';
-        const token = jwt.sign({ "mobileno":req.body.mobileno, "password":req.body.password},secretKey,{ expiresIn: '1h' })
+        const token = jwt.sign({ "mobileno":req.body.mobileno, "password":req.body.password},secretKey,{ expiresIn: '2h' })
         res.status(200).json({User,token})
     }catch(error){
         res.status(500).json({error:"user login failed"})
