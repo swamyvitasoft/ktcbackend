@@ -23,7 +23,7 @@ app.use(verifyToken);
 mongoose.connect(process.env.DB_URL)
     .then(console.log('db connected succesfully'))
     .catch(err => {
-        console.log('error', err)
+        console.log('error ', err)
     })
 app.listen(process.env.PORT, () => {
     console.log(`Server on http://78.142.47.247:${process.env.PORT}`)
