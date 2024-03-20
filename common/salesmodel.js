@@ -26,15 +26,15 @@ const saleSchema = new mongoose.Schema({
         type:String,
         required:true 
      },
-     estimated:{
+     estimatedamount:{
         type:String,
         required:true 
      },
-     advance:{
+     advanceamount:{
         type:String,
         required:true 
      },
-     balance:{
+     balaceamount:{
         type:String,
         required:true 
      }
