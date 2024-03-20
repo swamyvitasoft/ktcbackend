@@ -12,7 +12,7 @@ dotenv.config()
 app.use(express.json());
 app.use(cors())
 let corsOptions = {
-    origin: ['http://localhost:3009',]
+    origin: ['http://78.142.47.247:${process.env.PORT}',]
 };
 
 app.use('/user', cors(corsOptions), userRoutings);
@@ -26,5 +26,5 @@ mongoose.connect(process.env.DB_URL)
         console.log('error', err)
     })
 app.listen(process.env.PORT, () => {
-    console.log(`Server on http://localhost:${process.env.PORT}`)
+    console.log(`Server on http://78.142.47.247:${process.env.PORT}`)
 });
