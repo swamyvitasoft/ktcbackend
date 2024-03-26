@@ -4,6 +4,7 @@ import mongoose from "mongoose"
 import cors from "cors"
 import userRoutings from "./User/index.js"
 import saleRoutings from "./sale/index.js"
+import itemRoutings from "./item/index.js"
 import verifyToken from "./jwt/verifytoken.js"
 
 
@@ -17,6 +18,7 @@ let corsOptions = {
 
 app.use('/user', cors(corsOptions), userRoutings);
 app.use('/sale', cors(corsOptions), saleRoutings);
+app.use('/item', cors(corsOptions), itemRoutings);
 
 app.use(verifyToken);
 
