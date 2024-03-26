@@ -15,10 +15,12 @@ let corsOptions = {
     origin: ['http://78.142.47.247:${process.env.PORT}',]
 };
 
+app.get('/', function (req, res) {
+    res.redirect('/frontend');
+});
 app.use('/user', cors(corsOptions), userRoutings);
 app.use('/sale', cors(corsOptions), saleRoutings);
-
-app.use(verifyToken);
+// app.use(verifyToken);
 
 mongoose.connect(process.env.DB_URL)
     .then(console.log('db connected succesfully'))
