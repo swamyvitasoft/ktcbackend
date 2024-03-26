@@ -1,4 +1,4 @@
-import Itemmodel from "../common/itemsmodel";
+import Itemmodel from "../common/itemsmodel.js";
 
 export const addItems = async (req, res) => {
     try {
