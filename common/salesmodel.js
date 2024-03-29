@@ -3,6 +3,10 @@ import mongoose from "mongoose";
 
 const saleSchema = new mongoose.Schema(
   {
+    sno: {
+      type: Number,
+      required: true,
+    },
     fullname: {
       type: String,
       required: true,
@@ -28,15 +32,15 @@ const saleSchema = new mongoose.Schema(
       required: true,
     },
     estimatedamount: {
-      type: String,
+      type: Number,
       required: true,
     },
     advanceamount: {
-      type: String,
+      type: Number,
       required: true,
     },
     balaceamount: {
-      type: String,
+      type: Number,
       required: true,
     },
     note: {
