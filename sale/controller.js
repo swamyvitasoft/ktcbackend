@@ -43,6 +43,11 @@ export const getAllsales = async (req, res) => {
           as: "items",
         },
       },
+      {
+        $sort: {
+          createdAt: -1,
+        },
+      },
     ]);
     res.status(200).json(allsales);
   } catch (err) {
