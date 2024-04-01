@@ -12,7 +12,7 @@ export const addItems = async (req, res) => {
 
 export const getAllitems = async (req, res) => {
   try {
-    const allitems = await Itemmodel.find();
+    const allitems = await Itemmodel.find({status:"active"});
     res.status(200).json(allitems);
   } catch (err) {
     res.status(404).json({ err: "not found" });
@@ -40,8 +40,13 @@ export const itemUpdatebyId = async (req, res) => {
 };
 
 export const itemDeletebyId = async (req, res) => {
+  const data = {
+    status: "deactive",
+  };
   try {
-    const Item = await Itemmodel.findByIdAndDelete(req.params.id);
+    const Item = await Itemmodel.findByIdAndUpdate(req.params.id, data, {
+      new: true,
+    });
     res.status(201).json(Item);
   } catch (err) {
     res.status(500).json({ err: "Internal server error" });

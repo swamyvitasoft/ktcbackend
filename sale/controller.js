@@ -48,6 +48,11 @@ export const getAllsales = async (req, res) => {
           createdAt: -1,
         },
       },
+      {
+        $match: {
+          status: "active",
+        },
+      },
     ]);
     res.status(200).json(allsales);
   } catch (err) {
@@ -76,8 +81,13 @@ export const saleUpdatebyId = async (req, res) => {
 };
 
 export const saleDeletebyId = async (req, res) => {
+  const data = {
+    status: "deactive",
+  };
   try {
-    const Sale = await Salemodel.findByIdAndDelete(req.params.id);
+    const Sale = await Salemodel.findByIdAndUpdate(req.params.id, data, {
+      new: true,
+    });
     res.status(201).json(Sale);
   } catch (err) {
     res.status(500).json({ err: "Internal server error" });
