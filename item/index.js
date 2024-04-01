@@ -16,7 +16,7 @@ router.get("/getitems", verifyToken, getAllitems);
 
 router.get("/getItembyId/:id", verifyToken, getItemwithId);
 
-router.put("/upadate/:id", verifyToken, itemUpdatebyId);
+router.put("/update/:id", verifyToken, itemUpdatebyId);
 
 router.delete("/delete/:id", verifyToken, itemDeletebyId);
 

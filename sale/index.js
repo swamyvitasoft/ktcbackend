@@ -16,7 +16,7 @@ router.get("/getsales", verifyToken, getAllsales);
 
 router.get("/getSalebyId/:id", verifyToken, getSalewithId);
 
-router.put("/upadate/:id", verifyToken, saleUpdatebyId);
+router.put("/update/:id", verifyToken, saleUpdatebyId);
 
 router.delete("/delete/:id", verifyToken, saleDeletebyId);
 

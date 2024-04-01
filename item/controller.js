@@ -12,7 +12,7 @@ export const addItems = async (req, res) => {
 
 export const getAllitems = async (req, res) => {
   try {
-    const allitems = await Itemmodel.find({status:"active"});
+    const allitems = await Itemmodel.find({ status: "active" });
     res.status(200).json(allitems);
   } catch (err) {
     res.status(404).json({ err: "not found" });
