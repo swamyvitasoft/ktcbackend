@@ -93,3 +93,209 @@ export const saleDeletebyId = async (req, res) => {
     res.status(500).json({ err: "Internal server error" });
   }
 };
+
+export const getTopsales = async (req, res) => {
+  try {
+    const tosales = await Salemodel.aggregate([
+      {
+        $match: {
+          status: "active",
+        },
+      },
+      {
+        $lookup: {
+          from: "items",
+          localField: "itemId",
+          foreignField: "_id",
+          as: "items",
+        },
+      },
+      {
+        $group: {
+          _id: "$itemId",
+          count: {
+            $sum: 1,
+          },
+          totalAdvanceAmount: {
+            $sum: "$advanceamount",
+          },
+          totalEstimatedAmount: {
+            $sum: "$estimatedamount",
+          },
+          totalBalanceAmount: {
+            $sum: "$balaceamount",
+          },
+        },
+      },
+      {
+        $sort: {
+          count: -1,
+        },
+      },
+      {
+        $lookup: {
+          from: "items",
+          localField: "_id",
+          foreignField: "_id",
+          as: "items",
+        },
+      },
+    ]);
+    res.status(200).json(tosales);
+  } catch (err) {
+    res.status(404).json({ err: "not found" });
+  }
+};
+
+export const getCustomers = async (req, res) => {
+  try {
+    const allcustomers = await Salemodel.aggregate([
+      {
+        $match: {
+          status: "active",
+        },
+      },
+      {
+        $group: {
+          _id: "$mobileno",
+          count: {
+            $sum: 1,
+          },
+          fullname: {
+            $first: "$fullname",
+          },
+          totalAdvanceAmount: {
+            $sum: "$advanceamount",
+          },
+          totalEstimatedAmount: {
+            $sum: "$estimatedamount",
+          },
+          totalBalanceAmount: {
+            $sum: "$balaceamount",
+          },
+        },
+      },
+    ]);
+    res.status(200).json(allcustomers);
+  } catch (err) {
+    res.status(404).json({ err: "not found" });
+  }
+};
+
+export const getYearly = async (req, res) => {
+  try {
+    const yearlyData = await Salemodel.aggregate([
+      {
+        $match: {
+          status: "active",
+        },
+      },
+      {
+        $group: {
+          _id: {
+            $year: "$createdAt",
+          },
+          count: {
+            $sum: 1,
+          },
+          totalAdvanceAmount: {
+            $sum: "$advanceamount",
+          },
+          totalEstimatedAmount: {
+            $sum: "$estimatedamount",
+          },
+          totalBalanceAmount: {
+            $sum: "$balaceamount",
+          },
+        },
+      },
+    ]);
+    res.status(200).json(yearlyData);
+  } catch (err) {
+    res.status(404).json({ err: "not found" });
+  }
+};
+
+export const getMonthly = async (req, res) => {
+  try {
+    const monthlyData = await Salemodel.aggregate([
+      {
+        $match: {
+          createdAt: {
+            $gte: new Date("Mon, 01 Jan 2024 00:00:00 GMT"),
+            $lt: new Date("Wed, 01 Jan 2025 00:00:00 GMT"),
+          },
+        },
+      },
+      {
+        $group: {
+          _id: {
+            $month: "$createdAt",
+          },
+          createdAt: {
+            $first: "$createdAt",
+          },
+          estimatedTotalAmount: {
+            $sum: "$estimatedamount",
+          },
+          advanceTotalAmount: {
+            $sum: "$advanceamount",
+          },
+          balanceTotalAmount: {
+            $sum: "$balaceamount",
+          },
+        },
+      },
+    ]);
+    res.status(200).json(monthlyData);
+  } catch (err) {
+    res.status(404).json({ err: "not found" });
+  }
+};
+
+export const getDaily = async (req, res) => {
+  try {
+    const dailyData = await Salemodel.aggregate([
+      {
+        $match: {
+          createdAt: {
+            $gte: new Date("Thu, 01 Mar 2024 00:00:00 GMT"),
+            $lt: new Date("Fri, 01 Apr 2024 00:00:00 GMT"),
+          },
+        },
+      },
+      {
+        $group: {
+          _id: {
+            $month: "$createdAt",
+          },
+          createdAt: {
+            $first: "$createdAt",
+          },
+          totalEstimatedAmount: {
+            $sum: "$estimatedamount",
+          },
+          totalAdvanceAmount: {
+            $sum: "$advanceamount",
+          },
+          totalBalanceAmount: {
+            $sum: "$balaceamount",
+          },
+        },
+      },
+      {
+        $project: {
+          _id: 0,
+          month: "$_id",
+          createdAt: 1,
+          totalEstimatedAmount: 1,
+          totalAdvanceAmount: 1,
+          totalBalanceAmount: 1,
+        },
+      },
+    ]);
+    res.status(200).json(dailyData);
+  } catch (err) {
+    res.status(404).json({ err: "not found" });
+  }
+};
