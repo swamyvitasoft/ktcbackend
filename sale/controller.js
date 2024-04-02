@@ -259,8 +259,8 @@ export const getDaily = async (req, res) => {
       {
         $match: {
           createdAt: {
-            $gte: new Date("Thu, 01 Mar 2024 00:00:00 GMT"),
-            $lt: new Date("Fri, 01 Apr 2024 00:00:00 GMT"),
+            $gte: new Date("Thu, 01 Apr 2024 00:00:00 GMT"),
+            $lt: new Date("Fri, 01 May 2024 00:00:00 GMT"),
           },
         },
       },
