@@ -18,7 +18,7 @@ export const userLogin = async (req, res) => {
       password: req.body.password,
     });
     if (!User) {
-      res.status(404).json("user not found");
+      return res.status(204).send({ error: "user not found" });
     }
     const secretKey = "my-secretKey";
     const token = jwt.sign(
@@ -26,9 +26,9 @@ export const userLogin = async (req, res) => {
       secretKey,
       { expiresIn: "2h" }
     );
-    res.status(200).json({ User, token });
+    return res.status(200).send({ User, token });
   } catch (error) {
-    res.status(500).json({ error: "user login failed" });
+    return res.status(204).send({ error: "user login failed" });
   }
 };
 
@@ -38,5 +38,16 @@ export const getAllusers = async (req, res) => {
     res.status(200).json(allusers);
   } catch (err) {
     res.status(404).json({ err: "not found" });
+  }
+};
+
+export const settings = async (req, res) => {
+  try {
+    const Sale = await Usermodel.findByIdAndUpdate(req.params.id, req.body, {
+      new: true,
+    });
+    res.status(201).json(Sale);
+  } catch (err) {
+    res.status(500).json({ err: "Internal serval error" });
   }
 };
