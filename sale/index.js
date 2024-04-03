@@ -9,7 +9,8 @@ import {
   getCustomers,
   getYearly,
   getMonthly,
-  getDaily
+  getDaily,
+  getExport
 } from "../sale/controller.js";
 import verifyToken from "../jwt/verifytoken.js";
 
@@ -34,5 +35,7 @@ router.get("/getYearly", verifyToken, getYearly);
 router.get("/getMonthly", verifyToken, getMonthly);
 
 router.get("/getDaily", verifyToken, getDaily);
+
+router.post("/getExport", getExport);
 
 export default router;

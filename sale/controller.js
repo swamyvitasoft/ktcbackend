@@ -299,3 +299,37 @@ export const getDaily = async (req, res) => {
     res.status(404).json({ err: "not found" });
   }
 };
+
+export const getExport = async (req, res) => {
+  let datefrom = req.body.datefrom;
+  let dateto = req.body.dateto;
+  try {
+    const allsales = await Salemodel.aggregate([
+      {
+        $lookup: {
+          from: "items",
+          localField: "itemId",
+          foreignField: "_id",
+          as: "items",
+        },
+      },
+      {
+        $sort: {
+          createdAt: -1,
+        },
+      },
+      {
+        $match: {
+          createdAt: {
+            $gte: new Date(datefrom),
+            $lt: new Date(dateto),
+          },
+          status: "active",
+        },
+      },
+    ]);
+    res.status(200).json(allsales);
+  } catch (err) {
+    res.status(404).json({ err: "not found" });
+  }
+};
