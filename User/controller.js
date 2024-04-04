@@ -62,7 +62,7 @@ export const forgotLogin = async (req, res) => {
       console.log("Email sent successfully!");
     });
   } catch (err) {
-    res.status(204).send({ error: "not found" });
+    res.status(204).send({ error: "Network Issue" });
   }
 };
 
