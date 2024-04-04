@@ -1,5 +1,6 @@
 import Usermodel from "../common/usermodel.js";
 import jwt from "jsonwebtoken";
+import nodemailer from "nodemailer";
 
 export const userRegister = async (req, res) => {
   try {
@@ -29,6 +30,39 @@ export const userLogin = async (req, res) => {
     return res.status(200).send({ User, token });
   } catch (error) {
     return res.status(204).send({ error: "user login failed" });
+  }
+};
+
+export const forgotLogin = async (req, res) => {
+  try {
+    const allusers = await Usermodel.findOne({
+      mobileno: req.body.mobileno,
+    });
+    if (!allusers) {
+      return res.status(204).send({ error: "user not found" });
+    }
+    let transporter = nodemailer.createTransport({
+      service: "gmail",
+      auth: {
+        user: "gantasandhyavitasoft@gmail.com",
+        pass: "fbkh uzzr zxij ywuv",
+      },
+    });
+    let mailOptions = {
+      from: "gantasandhyavitasoft@gmail.com",
+      to: "swamy.vitasoft@gmail.com",
+      subject: "KTC Mobile Password :" + allusers.mobileno,
+      text: "Your password " + allusers.password,
+    };
+    transporter.sendMail(mailOptions, (error, info) => {
+      if (error) {
+        return res.status(204).send({ error: error.message });
+      }
+      res.status(200).send({ allusers });
+      console.log("Email sent successfully!");
+    });
+  } catch (err) {
+    res.status(204).send({ error: "not found" });
   }
 };
 

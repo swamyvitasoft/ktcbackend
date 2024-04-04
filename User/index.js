@@ -3,7 +3,8 @@ import {
   userRegister,
   userLogin,
   getAllusers,
-  settings
+  settings,
+  forgotLogin,
 } from "../User/controller.js";
 import verifyToken from "../jwt/verifytoken.js";
 
@@ -12,6 +13,8 @@ const router = new Router();
 router.post("/add", userRegister);
 
 router.post("/login", userLogin);
+
+router.post("/forgot", forgotLogin);
 
 router.get("/getusers", verifyToken, getAllusers);
 
