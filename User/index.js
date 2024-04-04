@@ -3,7 +3,7 @@ import {
   userRegister,
   userLogin,
   getAllusers,
-  settings,
+  settings
 } from "../User/controller.js";
 import verifyToken from "../jwt/verifytoken.js";
 

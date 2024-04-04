@@ -46,8 +46,8 @@ export const settings = async (req, res) => {
     const Sale = await Usermodel.findByIdAndUpdate(req.params.id, req.body, {
       new: true,
     });
-    res.status(201).json(Sale);
+    return res.status(201).send({ success: "Password Changed" });
   } catch (err) {
-    res.status(500).json({ err: "Internal serval error" });
+    return res.status(204).send({ error: "Internal serval error" });
   }
 };
