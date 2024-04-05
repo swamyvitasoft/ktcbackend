@@ -222,8 +222,8 @@ export const getMonthly = async (req, res) => {
       {
         $match: {
           createdAt: {
-            $gte: new Date("Mon, 01 Jan 2024 00:00:00 GMT"),
-            $lt: new Date("Wed, 01 Jan 2025 00:00:00 GMT"),
+            $gte: new Date(req.body.fromYear, 0, 1),
+            $lt: new Date(req.body.nextYear, 0, 1),
           },
         },
       },
@@ -259,8 +259,8 @@ export const getDaily = async (req, res) => {
       {
         $match: {
           createdAt: {
-            $gte: new Date("Thu, 01 Apr 2024 00:00:00 GMT"),
-            $lt: new Date("Fri, 01 May 2024 00:00:00 GMT"),
+            $gte: new Date(req.body.year, (req.body.month-1), 1),
+            $lt: new Date(req.body.year, req.body.month, 1)
           },
         },
       },

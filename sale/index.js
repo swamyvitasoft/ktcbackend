@@ -32,9 +32,9 @@ router.get("/getCustomers", verifyToken, getCustomers);
 
 router.get("/getYearly", verifyToken, getYearly);
 
-router.get("/getMonthly", verifyToken, getMonthly);
+router.post("/getMonthly", verifyToken, getMonthly);
 
-router.get("/getDaily", verifyToken, getDaily);
+router.post("/getDaily", verifyToken, getDaily);
 
 router.post("/getExport", getExport);
 
